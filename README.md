@@ -2,8 +2,9 @@
 <h2> 🌐 Tatvasoft Internship </h2>
 
 
-This repository contains the project developed during TatvaSoft's 15-day Online Summer Internship Program.(2 july to 16 july )
-The goal of this internship was to build a full-stack web application utilizing the following technologies:
+This repository contains the project developed during TatvaSoft's 15-day Online Summer Internship Program (2 july to 16 july ).
+
+During the internship, we gained hands-on experience with the following technologies:
 
 Database: PostgreSQL
 
