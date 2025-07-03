@@ -1,66 +1,66 @@
 
--- Create Directors Table
-CREATE TABLE directors (
-    director_id SERIAL PRIMARY KEY,
-    director_name VARCHAR(100) NOT NULL
+-- Create Students Table
+CREATE TABLE students (
+    student_id SERIAL PRIMARY KEY,
+    student_name VARCHAR(100) NOT NULL
 );
 
--- Create Movies Table
-CREATE TABLE movies (
-    movie_id SERIAL PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    director_id INT REFERENCES directors(director_id),
-    genre VARCHAR(50) NOT NULL,
-    rating DECIMAL(3, 1) NOT NULL
+-- Create Courses Table
+CREATE TABLE courses (
+    course_id SERIAL PRIMARY KEY,
+    course_name VARCHAR(100) NOT NULL,
+    student_id INT REFERENCES students(student_id),
+    subject VARCHAR(50) NOT NULL,
+    marks INT NOT NULL
 );
 
--- Insert into directors
-INSERT INTO directors (director_name) VALUES
-('Christopher Nolan'), 
-('Steven Spielberg'), 
-('Quentin Tarantino'), 
-('Greta Gerwig');
+-- Insert into students
+INSERT INTO students (student_name) VALUES
+('Alice Johnson'),
+('Brian Smith'),
+('Catherine Lee'),
+('David Miller');
 
--- Insert into movies
-INSERT INTO movies (title, director_id, genre, rating) VALUES
-('Inception', 1, 'Sci-Fi', 8.8),
-('Interstellar', 1, 'Sci-Fi', 8.6),
-('Jurassic Park', 2, 'Adventure', 8.1),
-('Pulp Fiction', 3, 'Crime', 8.9),
-('Barbie', 4, 'Fantasy', 7.0);
+-- Insert into courses
+INSERT INTO courses (course_name, student_id, subject, marks) VALUES
+('Mathematics', 1, 'Math', 88),
+('Physics', 2, 'Science', 76),
+('Literature', 3, 'English', 91),
+('History', 4, 'Social', 85),
+('Biology', 2, 'Science', 82);
 
 -- Simple select
-SELECT * FROM movies;
+SELECT * FROM courses;
 
--- Order by rating descending
-SELECT title, rating FROM movies ORDER BY rating DESC;
+-- Order by marks descending
+SELECT course_name, marks FROM courses ORDER BY marks DESC;
 
--- Filter by genre
-SELECT * FROM movies WHERE genre = 'Sci-Fi';
+-- Filter by subject
+SELECT * FROM courses WHERE subject = 'Science';
 
--- Movies with rating > 8.5
-SELECT title FROM movies WHERE rating > 8.5;
+-- Courses with marks > 80
+SELECT course_name FROM courses WHERE marks > 80;
 
 -- Pattern match
-SELECT title FROM movies WHERE title ILIKE '%e%';
+SELECT course_name FROM courses WHERE course_name ILIKE '%t%';
 
--- Inner Join to see movie and director names
-SELECT m.title, d.director_name
-FROM movies m
-INNER JOIN directors d ON m.director_id = d.director_id;
+-- Inner Join to see course and student names
+SELECT c.course_name, s.student_name
+FROM courses c
+INNER JOIN students s ON c.student_id = s.student_id;
 
--- Average rating per director
-SELECT d.director_name, AVG(m.rating) AS avg_rating
-FROM movies m
-JOIN directors d ON m.director_id = d.director_id
-GROUP BY d.director_name;
+-- Average marks per student
+SELECT s.student_name, AVG(c.marks) AS avg_marks
+FROM courses c
+JOIN students s ON c.student_id = s.student_id
+GROUP BY s.student_name;
 
--- Update rating of a movie
-UPDATE movies SET rating = 7.5 WHERE title = 'Barbie';
+-- Update marks of a course
+UPDATE courses SET marks = 90 WHERE course_name = 'History';
 
--- Delete a movie
-DELETE FROM movies WHERE title = 'Jurassic Park';
+-- Delete a course
+DELETE FROM courses WHERE course_name = 'Physics';
 
 -- Drop both tables
-DROP TABLE movies;
-DROP TABLE directors;
+DROP TABLE courses;
+DROP TABLE students;
